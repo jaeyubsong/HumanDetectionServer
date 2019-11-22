@@ -12,8 +12,13 @@ RUN apt-get update && apt-get install -y libglib2.0-0 libsm6 libxrender-dev libx
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-# Install mmdetection
+# Install HumanDetectionServer
 RUN conda install cython -y && conda clean --all
 RUN git clone https://github.com/jsong0327/HumanDetectionServer.git /HumanDetectionServer
 WORKDIR /HumanDetectionServer
 RUN pip install --no-cache-dir -e .
+
+RUN git clone https://github.com/jsong0327/mmcv.git && \
+      cd mmcv && \
+      cd .. && \
+      rm -rf mmcv
