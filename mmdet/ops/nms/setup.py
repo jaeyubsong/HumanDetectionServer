@@ -63,6 +63,15 @@ class custom_build_ext(build_ext):
         customize_compiler_for_nvcc(self.compiler)
         build_ext.build_extensions(self)
 
+nvcc_ARCH  = ['-arch=sm_52']
+nvcc_ARCH += ["-gencode=arch=compute_75,code=\"compute_75\""]
+nvcc_ARCH += ["-gencode=arch=compute_75,code=\"sm_75\""]
+nvcc_ARCH += ["-gencode=arch=compute_70,code=\"sm_70\""]
+nvcc_ARCH += ["-gencode=arch=compute_61,code=\"sm_61\""]
+nvcc_ARCH += ["-gencode=arch=compute_52,code=\"sm_52\""]
+extra_compile_args = { 
+            'cxx': ['-Wno-unused-function', '-Wno-write-strings'],
+            'nvcc': nvcc_ARCH,}
 
 setup(
     name='soft_nms',
@@ -76,7 +85,9 @@ setup(
         CUDAExtension('nms_cuda', [
             'src/nms_cuda.cpp',
             'src/nms_kernel.cu',
-        ]),
+        ],
+        extra_compile_args=extra_compile_args,
+        ),
         CUDAExtension('nms_cpu', [
             'src/nms_cpu.cpp',
         ]),

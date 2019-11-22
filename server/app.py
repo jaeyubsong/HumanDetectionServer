@@ -5,8 +5,8 @@ if len(sys.argv) != 3 or (sys.argv[1] != '-file' and sys.argv[1] != '-folder'):
   print("Write -file FILEPATH for one image and -folder FOLDERPATH for folder\nex) test_image.py -folder data/coco")
   exit(0)
 
-config_file = 'configs/htc/htc_dconv_c3-c5_mstrain_400_1400_x101_64x4d_fpn_20e.py'
-checkpoint_file = 'checkpoints/htc_dconv_c3-c5_mstrain_400_1400_x101_64x4d_fpn_20e_20190408-0e50669c.pth'
+config_file = '../configs/htc/htc_dconv_c3-c5_mstrain_400_1400_x101_64x4d_fpn_20e.py'
+checkpoint_file = '../checkpoints/htc_dconv_c3-c5_mstrain_400_1400_x101_64x4d_fpn_20e_20190408-0e50669c.pth'
 
 # build the model from a config file and a checkpoint file
 model = init_detector(config_file, checkpoint_file, device='cuda:0')
