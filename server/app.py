@@ -13,9 +13,11 @@ model = init_detector(config_file, checkpoint_file, device='cuda:0')
 
 if (sys.argv[1] == '-file'):
   # test a single image and show the results
+  print("Result for file %s" % sys.argv[2])
   img = sys.argv[2]  # or img = mmcv.imread(img), which will only load it once
   result = inference_detector(model, img)
-  show_result(img, result, model.CLASSES, out_file='result.jpg')
+  end_result=show_result(img, result, model.CLASSES, out_file='result.jpg')
+  print(end_result)
 
 elif (sys.argv[1] == '-folder'):
   exit(0)
