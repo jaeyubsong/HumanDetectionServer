@@ -27,7 +27,7 @@ RUN mkdir /HumanDetectionServer/checkpoints && \
 
 RUN pip uninstall -y mmcv
 RUN git clone https://github.com/jsong0327/mmcv.git && \
-      cd mmcv
+      cd mmcv && \
       pip install . && \
       cd .. && \
       rm -rf mmcv
