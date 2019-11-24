@@ -16,13 +16,17 @@ def index():
 
 @app.route('/checkObject', methods=['POST'])
 def checkObject():
-  detailed = request.form['detailed']
-  returnImage = request.form['returnImage']
-  nparr = np.fromstring(request.form['data'], np.uint8)
+  string_img = request.data
+  nparr = np.fromstring(string_img, np.uint8)
   img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
   result = inference_detector(model, img)
   end_result=show_result(img, result, model.CLASSES, out_file='result.jpg')
-  myResponse = {'result': end_result}
+  myResponse = {'result': False}
+  print(end_result)
+  for elem in end_result:
+    if elem['label'] == 'person':
+      myResponse = {'result': True}
+      break
   response = jsonify(myResponse)
   return response
 
