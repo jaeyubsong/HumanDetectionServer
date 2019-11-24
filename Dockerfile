@@ -19,7 +19,8 @@ RUN conda install cython -y && conda clean --all
 RUN git clone https://github.com/jsong0327/HumanDetectionServer.git /HumanDetectionServer
 WORKDIR /HumanDetectionServer
 RUN PYTHON=python3 bash ./compile.sh
-RUN pip install --no-cache-dir -e .
+#RUN pip install --no-cache-dir -e .
+RUN pip install -r requirements.txt
 
 RUN mkdir /HumanDetectionServer/checkpoints && \
       cd /HumanDetectionServer/checkpoints && \
