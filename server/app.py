@@ -24,12 +24,28 @@ def checkObject():
   myResponse = {'result': False}
   print(end_result)
   for elem in end_result:
-    if elem['label'] == 'person':
+    print(elem)
+    if elem['label'] == 'person' and elem['score'] > 0.6:
       myResponse = {'result': True}
       break
   response = jsonify(myResponse)
   return response
 
+
+@app.route('/objectDetectionResult', methods=['POST'])
+def returnObject():
+  string_img = request.data
+  nparr = np.fromstring(string_img, np.uint8)
+  img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+  result = inference_detector(model, img)
+  end_result=show_result(img, result, model.CLASSES, out_file='result.jpg')
+  myResponse = []
+  for elem in end_result:
+    tmp_elem = {"object": elem['label'], "score": float(elem['score'])}
+    myResponse.append(tmp_elem)
+  print(myResponse)
+  response = jsonify(myResponse)
+  return response
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', debug=True)
